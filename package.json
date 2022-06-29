@@ -1,0 +1,26 @@
+{
+  "name": "final-year-project-backend-api",
+  "version": "1.0.0",
+  "description": "This repository contains the backend API for the final year projects submission system in a loosely coupled architecture",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marconi-Lab/fyp-backend.git"
+  },
+  "keywords": [
+    "ExpressJS",
+    "SQL",
+    "RESTful",
+    "API",
+    "Node"
+  ],
+  "author": "Ben Wycliff Mugalu - MarconiLab@MAK",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marconi-Lab/fyp-backend/issues"
+  },
+  "homepage": "https://github.com/Marconi-Lab/fyp-backend#readme"
+}
