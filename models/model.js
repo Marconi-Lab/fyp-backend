@@ -22,6 +22,8 @@ const dataSchema = new Schema({
     accessToken: {
         type: String
     }
-})
-module.exports = mongoose.model('user', dataSchema)
+});
+
+const User = mongoose.model('user', dataSchema);
+module.exports = User;
 

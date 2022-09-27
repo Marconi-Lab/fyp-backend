@@ -11,24 +11,28 @@ async function validatePassword(plainPassword, hashedPassword){
     return await bcrypt.compare(plainPassword, hashedPassword)
 }
 
-// -----------------------------signup-------------------------------------
-exports.signup = async(req, res, next) => {
+
+// -----------------------------------------------signup-----------------------------------------------------------
+exports.signup = async (req, res, next) => {
     try {
         //capture user details
-        const {email, password, role} = req.body;
+        const { email, password, role} = req.body;
+
+        //check if user already has an account
+        const emailExist = await User.findOne({email});
+        if (emailExist) return res.json({ message: "Email already exists" });
 
         const hashedPassword = await hashPassword(password);
         const newUser = new User({
             email,
             password: hashedPassword,
-            role: role || "basic",
+            role: role || "basic"
         });
         
         //create an access token for the user
         const accessToken = jwt.sign({ userId: newUser._id }, `${process.env.JWT_SECRET_KEY}`, {
             expiresIn: 3600,
-        }
-        );
+        });
 
         newUser.accessToken = accessToken;
         await newUser.save();
@@ -38,6 +42,6 @@ exports.signup = async(req, res, next) => {
         });
     } catch(error){
         next(error);
-        console.log("Error detected")
+        console.log("Error detected");
     }
 }

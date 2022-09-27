@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router({mergeParams: true});
-const Authn = require("../controllers/authetication");
+const router = express.Router();
+const authn = require("../controllers/");
 
-router.post('/signup', Authn.signup)
+router.post("/signup", authn.signup);
 
 module.exports = router;
