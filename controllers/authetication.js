@@ -25,7 +25,7 @@ exports.signup = async(req, res, next) => {
         });
         
         //create an access token for the user
-        const accessToken = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
+        const accessToken = jwt.sign({ userId: newUser._id }, `${process.env.JWT_SECRET_KEY}`, {
             expiresIn: 3600,
         }
         );
