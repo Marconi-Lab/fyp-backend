@@ -16,7 +16,7 @@ exports.auth = async (req, res, next) => {
     res.locals.loggedInUser = await User.findById(userId);
     next();
   } catch (err) {
-    console.log("Application-----------------------------");
+    // console.log("Application-----------------------------");
     res.status(401).json({
       msg: err,
     });
