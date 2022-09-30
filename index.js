@@ -11,7 +11,7 @@ dotenv.config({debug: true, path: "./.env" });
 const port = process.env.PORT || 3000;
 
 // -------------------database connection------------------
-mongoose.connect("mongodb://localhost:27017/").then(() => {
+mongoose.connect("mongodb://localhost:27017/backend").then(() => {
     console.log('Database connected successfully');
 });
 // -------------------------------------------------
