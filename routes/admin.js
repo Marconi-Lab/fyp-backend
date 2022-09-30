@@ -1,20 +1,45 @@
-const express = require('express');
-const { allowIfLoggedin } = require('../controllers/');
+const express = require("express");
 const router = express.Router();
-const authn = require("../controllers/");
-const token = require('../controllers/auth')
-const access = require('../controllers/access')
+const operation = require("../controllers/");
+const auth = require("../controllers/autheticate");
+const access = require("../controllers/access");
 
-router.post("/signup", authn.signup);
+router.post("/signup", operation.signup);
 
-router.post("/login", authn.login);
+router.post("/login", operation.login);
 
-// router.get("/user/:userId", authn.getUser);
-router.get("/user/:userId", token.auth , access.allowIfLoggedin, authn.getUser);
+router.get(
+  "/user/:userId",
+  auth.token,
+  access.allowIfLoggedin,
+  operation.getUser
+);
 
-router.get("/users", token.auth, token.isAdmin, access.allowIfLoggedin, access.grantAccess("readAny", "profile"), authn.getUsers);
+router.get(
+  "/users",
+  auth.token,
+  auth.isAdmin,
+  access.allowIfLoggedin,
+  access.grantAccess("readAny", "profile"),
+  operation.getUsers
+);
 
-// router.put("/user/:userId", token.auth, allowIfLoggedin, access.grantAccess, updateUser)
-router.put("/user/:userId", authn.updateUser)
+router.put(
+  "/user/:userId",
+  auth.token,
+  auth.isAdmin,
+  access.allowIfLoggedin,
+  access.grantAccess("updateAny", "profile"),
+  operation.updateUser
+);
+
+router.delete(
+  "/user/:userId",
+  auth.token,
+  auth.isAdmin,
+  access.allowIfLoggedin,
+  access.grantAccess("deleteAny", "profile"),
+  operation.deleteUser
+);
 
 module.exports = router;

@@ -1,3 +1,3 @@
-const signAuth = require("./authetication");
+const authn = require("./userOperations");
 
-module.exports = signAuth;
+module.exports = authn;

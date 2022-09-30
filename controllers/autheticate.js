@@ -1,14 +1,14 @@
-const User = require("../models/model")
+const User = require("../models/model");
 const jwt = require("jsonwebtoken");
 
-exports.auth = async (req, res, next) => {
+exports.token = async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     if (!token) {
       throw new Error("Authentication Failed");
     }
     const { userId, exp } = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-    
+
     //Check if token has expired
     if (exp < Date.now().valueOf() / 1000) {
       return res
@@ -24,23 +24,19 @@ exports.auth = async (req, res, next) => {
   }
 };
 
+exports.isAdmin = async (req, res, next) => {
+  try {
+    // get user
+    const user = res.locals.loggedInUser;
 
-exports.isAdmin = async (req, res, next)=>{
-    try{
-        // get user
-        const user = res.locals.loggedInUser;
+    // check that user role is admin
+    // throw error is user is not admin
+    if (user.role != "admin") throw new Error("Unauthorized, only admins");
 
-        // check that user role is admin
-        // throw error is user is not admin
-        if (user.role != "admin") throw new Error("Unauthorized, only admins")
-        
-        next();
-    }
-    catch (err) {
-        res.status(401).json(
-            {
-                msg: `${err}`
-            }
-        )
-    }
-}
+    next();
+  } catch (err) {
+    res.status(401).json({
+      msg: `${err}`,
+    });
+  }
+};
